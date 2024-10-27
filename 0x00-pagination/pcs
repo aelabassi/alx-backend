@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2027
+
+for arg in "$@"; do
+    echo "running pycodestyle for $arg"
+    pycodestyle "$arg"
+    echo "------------------------------"
+done
