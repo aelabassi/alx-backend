@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+for arg in "$@"; do
+    echo "making executable for $arg"
+    chmod u+x "$arg"
+    echo "------------------------------"
+done
