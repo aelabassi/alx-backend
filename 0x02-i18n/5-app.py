@@ -18,6 +18,12 @@ class Config:
 
 app.config.from_object(Config)
 babel = Babel(app)
+users = {
+    1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
+    2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
+    3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
+    4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
+}
 
 
 @babel.localeselector
@@ -28,6 +34,24 @@ def get_locale() -> str:
     if local and local in app.config['LANGUAGES']:
         return local
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+def get_user(login_as: int) -> Union[Dict[str, Union[str, None]], None]:
+    """ Validate login_as
+    Args:
+        login_as: int
+    Returns:
+        Dict[str, Union[str, None]] or None
+    """
+    return users.get(login_as)
+
+
+@app.before_request
+def before_request():
+    """ Before request
+    """
+    user = get_user(1)
+    g.user = user
 
 
 @app.route('/', strict_slashes=False)
