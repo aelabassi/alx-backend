@@ -6,7 +6,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'], strict_slashes=False)
+@app.route('/', strict_slashes=False)
 def index() -> str:
     """ GET /
     Return: 1-index.html
@@ -15,4 +15,4 @@ def index() -> str:
 
 
 if __name__ == '__main__':
-    app.run(host='', port=5000)
+    app.run()
