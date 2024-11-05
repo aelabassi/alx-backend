@@ -3,7 +3,6 @@
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from typing import Union, Dict
-import pytz
 
 
 app = Flask(__name__)
@@ -40,19 +39,6 @@ def get_locale() -> str:
         if local and local in app.config['LANGUAGES']:
             return local
 
-@babel.timezoneselector
-def get_timezone() -> str:
-    """
-    Gets timezone from request object
-    """
-    tz = request.args.get('timezone', '').strip()
-    if not tz and g.user:
-        tz = g.user['timezone']
-    try:
-        return pytz.timezone(tz).zone
-    except pytz.exceptions.UnknownTimeZoneError:
-        return app.config['BABEL_DEFAULT_TIMEZONE']
-
 
 def get_user(login_as: int) -> Union[Dict[str, Union[str, None]], None]:
     """ Validate login_as
@@ -77,7 +63,7 @@ def index() -> str:
     """ GET /
     Return: 1-index.html
     """
-    return render_template('6-index.html')
+    return render_template('7-index.html')
 
 
 if __name__ == '__main__':
